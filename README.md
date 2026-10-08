@@ -204,15 +204,15 @@ Testing can be completed when:
 
 | Requirement | Requirement description | Covered by | Status |
 | :--- | :--- | :--- | :--- |
-| **REQ-3.1** | Transfer amount must be 100–500,000 KZT and use whole tenge | TR-AMT-001, TR-AMT-002, TR-AMT-003, TR-AMT-004, TR-APP-005 | **Partially Covered** — decimal handling behavior is undefined |
-| **REQ-3.2** | Daily transfer limit is 1,000,000 KZT and resets at midnight Almaty time | TR-APP-003, TR-APP-004, TR-APP-005 | **Partially Covered** — midnight reset not tested |
+| **REQ-3.1** | Transfer amount must be 100–500,000 KZT and use whole tenge | TR-AMT-001, TR-AMT-002, TR-AMT-003, TR-AMT-004, TR-APP-005 | **Partially Covered** -decimal handling behavior is undefined |
+| **REQ-3.2** | Daily transfer limit is 1,000,000 KZT and resets at midnight Almaty time | TR-APP-003, TR-APP-004, TR-APP-005 | **Partially Covered** - midnight reset not tested |
 | **REQ-3.3** | Transfers above 100,000 KZT require a 6-digit SMS code; the code is valid for 120 seconds; three wrong attempts cancel the transfer | TR-AMT-003, TR-APP-001, TR-APP-002, TR-OTP-001, TR-OTP-002 | **Covered** |
-| **REQ-3.4** | Insufficient balance handling | None | **UNCOVERED** — behavior is not specified in the provided brief |
+| **REQ-3.4** | Insufficient balance handling | None | **UNCOVERED** - behavior is not specified in the provided brief |
 
 ### Coverage gaps & open questions
-* **REQ-3.1 — Decimal input behavior:** The brief states "whole tenge only", but does not specify how non-integer values (e.g., `100.50 KZT` in `TR-AMT-005`) should be handled (input mask rejection, rounding, truncation, or validation message).
-* **REQ-3.2 — Midnight reset:** The daily transfer limit is specified to reset at midnight Almaty time, but this time-based behavior is not directly covered by the 12 planned test cases.
-* **REQ-3.4 — Insufficient balance:** The provided brief does not define insufficient balance as a test condition and does not specify the expected system behavior when the account balance is insufficient. Additional analyst clarification is required.
+* **REQ-3.1 - Decimal input behavior:** The brief states "whole tenge only", but does not specify how non-integer values (e.g., `100.50 KZT` in `TR-AMT-005`) should be handled (input mask rejection, rounding, truncation, or validation message).
+* **REQ-3.2 - Midnight reset:** The daily transfer limit is specified to reset at midnight Almaty time, but this time-based behavior is not directly covered by the 12 planned test cases.
+* **REQ-3.4 - Insufficient balance:** The provided brief does not define insufficient balance as a test condition and does not specify the expected system behavior when the account balance is insufficient. Additional analyst clarification is required.
 
 ---
 
@@ -236,7 +236,7 @@ Testing can be completed when:
 # 5. Defect Reports
 
 
-### BUG-001 — Transfer amount above maximum is accepted
+### BUG-001 - Transfer amount above maximum is accepted
 * **Title:** `[Transfers]: Amount above 500,000 KZT is accepted`
 * **Traceability:** REQ-3.1
 * **Environment:** Test environment
@@ -247,7 +247,7 @@ Testing can be completed when:
   1. Enter 500,001 KZT.
   2. Continue the transfer.
 * **Expected result:** The amount is rejected and an amount validation error is displayed.
-* **Actual result — mocked:** The application accepts the amount and allows the transfer to proceed.
+* **Actual result - mocked:** The application accepts the amount and allows the transfer to proceed.
 * **Reproducibility:** 5/5 simulated attempts
 * **Severity:** High
 * **Priority:** High
@@ -255,7 +255,7 @@ Testing can be completed when:
 
 ---
 
-### BUG-002 — Third incorrect SMS code does not cancel transfer
+### BUG-002 -Third incorrect SMS code does not cancel transfer
 * **Title:** `[Transfers]: Transfer remains active after three incorrect SMS codes`
 * **Traceability:** REQ-3.3
 * **Environment:** Test environment
@@ -266,7 +266,7 @@ Testing can be completed when:
   2. Enter another incorrect 6-digit SMS code.
   3. Enter a third incorrect 6-digit SMS code.
 * **Expected result:** The transfer is cancelled after the third incorrect code.
-* **Actual result — mocked:** The transfer remains in the SMS verification state after the third incorrect code.
+* **Actual result - mocked:** The transfer remains in the SMS verification state after the third incorrect code.
 * **Reproducibility:** 5/5 simulated attempts
 * **Severity:** High
 * **Priority:** High
@@ -274,7 +274,7 @@ Testing can be completed when:
 
 ---
 
-### BUG-003 — Expired SMS code is accepted
+### BUG-003 - Expired SMS code is accepted
 * **Title:** `[Transfers]: Expired SMS code is accepted and transfer is completed`
 * **Traceability:** REQ-3.3
 * **Environment:** Test environment
@@ -286,7 +286,7 @@ Testing can be completed when:
   2. Enter the valid SMS code.
   3. Confirm the transfer.
 * **Expected result:** The expired SMS code is rejected and the transfer is not completed.
-* **Actual result — mocked:** The application accepts the expired code and completes the transfer.
+* **Actual result - mocked:** The application accepts the expired code and completes the transfer.
 * **Reproducibility:** 5/5 simulated attempts
 * **Severity:** Critical
 * **Priority:** High
